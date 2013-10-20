@@ -29,9 +29,7 @@
         // device APIs are available
         //
         function onDeviceReady() {
-            alert(  'Device Name: '     + device.name     + '<br />' +
-                    'Device PhoneGap: ' + device.phonegap + '<br />' +
-                    'Device Platform: ' + device.platform + '<br />' +
+            alert(  'Device Name: '     + device.name     + '<br />' +  'Device Platform: ' + device.platform + '<br />' +
                     'Device UUID: '     + device.uuid     + '<br />' +
                     'Device Version: '  + device.version  + '<br />');
         }
@@ -177,23 +175,28 @@
 <div data-role="collapsible" data-collapsed="true">
     <h3>Programm&uuml;bersicht</h3>
     <ul data-filter="true" data-role="listview" class="ui-listview"
-        data-filter-placeholder="Suchen nach Personen/Abstract" id="programmuebersicht"><li class="ui-li ui-li-static ui-body-c"><span class="fontnormal" style="line-height: 1.7;">
-        Das Programm steht nur zur Vefügung, wenn Sie über eine aktive Internetverbdindung verfügen.<br/> Klicken Sie <b onclick="generiereProgramm()">HIER</b> um das Programm zu aktualisieren.</span></li>
+        data-filter-placeholder="Suchen nach Personen/Abstract" id="programmuebersicht">
+        <li class="ui-li ui-li-static ui-body-c"><span class="fontnormal" style="line-height: 1.7;">
+            Das Programm steht nur zur Vefügung, wenn Sie über eine aktive Internetverbdindung verfügen.<br/> Klicken Sie <b><span onclick="generiereProgramm()">HIER</span></b> um das Programm zu aktualisieren.</span>
+        </li>
     </ul>
 </div>
 <div data-role="collapsible" data-collapsed="true" id="waslaeuft">
     <h3>Was läuft jetzt?</h3>
     <ul data-filter="false" data-role="listview" class="ui-listview"
-        id="waslaeuftjetzt">Derzeit läuft kein Vortrag.
+        id="waslaeuftjetzt">
+        <li class="ui-li ui-li-static ui-body-c"><span class="fontnormal" style="line-height: 1.7;">
+           Derzeit läuft kein Vortrag.
+        </li>
     </ul>
 </div>
 <div data-role="collapsible" data-collapsed="true">
     <h3>Autoren</h3>
     <ul data-filter="true" data-role="listview" class="ui-listview" id="autorenliste"
         data-filter-placeholder="Suchen nach Namen ..." >
-        <li class="ui-li ui-li-static ui-body-c"><span class="fontnormal" style="line-height: 1.7;">Das Autorenliste steht nur zur Vefügung, wenn Sie über eine aktive Internetverbdindung verfügen.
-            Klicken Sie <b onclick="generiereAutorenListe()">HIER</b> um das Autorenliste zu aktualisieren.</span></li>
-
+        <li class="ui-li ui-li-static ui-body-c"><span class="fontnormal" style="line-height: 1.7;">
+            Die Autorenliste steht nur zur Vefügung, wenn Sie über eine aktive Internetverbdindung verfügen.<br/> Klicken Sie <b><span onclick="generiereAutorenListe()">HIER</span></b> um die Autorenliste zu aktualisieren.</span>
+        </li>
     </ul>
 </div>
 <div data-role="collapsible" data-collapsed="true">
