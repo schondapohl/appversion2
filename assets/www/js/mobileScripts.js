@@ -88,6 +88,10 @@ function initControls() {
         waslaeuftjetzt();
     });
     bodyHeight = $('body').height();
+    $('#umfrageTabelletd1').height(bodyHeight / 2  - 20);
+    $('#umfrageTabelletd2').height(bodyHeight / 2  - 20);
+    $('#umfrageTabelletd3').height(bodyHeight / 2);
+    $('#umfrageTabelletd4').height(bodyHeight / 2);
 }
 
 function starteAnfrage()
@@ -190,29 +194,29 @@ function enableDisableVotings(data) {
     for (var i = 0; i < dlength; i++) {
 
         /* DYNAMISCHE VERSION
-        var votingBlock = dummyHtml.replace(/XXX/g, i);
-        votingBlock = votingBlock.replace("K1",data[0].keins);
-        votingBlock = votingBlock.replace("K2",data[0].kzwei);
-        votingBlock = votingBlock.replace("K3",data[0].kdrei);
-        var ziel = $('#votingZiel').html();
-		var testhtml  = "<div id='aussen'><div>Kategorie 1</div><input type=range min=1 max=50 value=10 id='#slider-fill_0_3'></div>";
-		$('#votingZiel').append(votingBlock);
-        $.mobile.slider.prototype.options.initSelector = ".myslider";
-        $('#slider-fill_0_1').slider();
+         var votingBlock = dummyHtml.replace(/XXX/g, i);
+         votingBlock = votingBlock.replace("K1",data[0].keins);
+         votingBlock = votingBlock.replace("K2",data[0].kzwei);
+         votingBlock = votingBlock.replace("K3",data[0].kdrei);
+         var ziel = $('#votingZiel').html();
+         var testhtml  = "<div id='aussen'><div>Kategorie 1</div><input type=range min=1 max=50 value=10 id='#slider-fill_0_3'></div>";
+         $('#votingZiel').append(votingBlock);
+         $.mobile.slider.prototype.options.initSelector = ".myslider";
+         $('#slider-fill_0_1').slider();
 
-        $('#slider-fill_0_2').slider();
+         $('#slider-fill_0_2').slider();
 
-        $('#slider-fill_0_3').slider();
-        */
+         $('#slider-fill_0_3').slider();
+         */
         /* Vortrag */
         vortrag = data[i];
         console.log("enableDisableVotings:" + vortrag.vtitel + " ist aktiv " + vortrag.aktiv );
         if (vortrag.aktiv == 1) {
             $('#vortragWrapper_' + i + " h4").html(vortrag.vautor  + ": " + vortrag.vtitel);
             /*var votingBlock = "";
-            votingBlock = $('#vortragWrapper_' + i).html().replace("K1",data[0].keins);
-            votingBlock = votingBlock.replace("K2",data[0].kzwei);
-            votingBlock = votingBlock.replace("K3",data[0].kdrei);*/
+             votingBlock = $('#vortragWrapper_' + i).html().replace("K1",data[0].keins);
+             votingBlock = votingBlock.replace("K2",data[0].kzwei);
+             votingBlock = votingBlock.replace("K3",data[0].kdrei);*/
 
             $('#vortragWrapper_' + i).children().eq(1).children().eq(0).html(data[0].keins);
             $('#vortragWrapper_' + i).children().eq(1).children().eq(2).html(data[0].kzwei);
@@ -444,10 +448,6 @@ function clientListen() {
                 $('#v_value').val(message.fid);
                 //$('#votingLink').click();
                 $('#votingDiv').removeClass('hidden visibleVotingDiv').addClass('visibleVotingDiv');
-                $('#umfrageTabelletd1').height($('#votingDiv').height() / 2);
-                $('#umfrageTabelletd2').height($('#votingDiv').height() / 2);
-                $('#umfrageTabelletd3').height($('#votingDiv').height() / 2);
-                $('#umfrageTabelletd4').height($('#votingDiv').height() / 2);
             }
             else if (message.beendet == true) {
                 window.localStorage.removeItem("frage");
@@ -536,7 +536,7 @@ function abstimmen(antwort) {
         uid = uniqueID;
     }
     else {
-        uid = device.name;
+        uid = device.uuid;
     }
     console.log("ID " + uid);
 
@@ -601,10 +601,7 @@ function umfrageAktiv() {
                 //$('#votingLink').click();
                 if (data.abgestimmt == false) {
                     $('#votingDiv').removeClass('hidden visibleVotingDiv').addClass('visibleVotingDiv');
-                    $('#umfrageTabelletd1').height(bodyHeight / 2  - 20);
-                    $('#umfrageTabelletd2').height(bodyHeight / 2  - 20);
-                    $('#umfrageTabelletd3').height(bodyHeight / 2);
-                    $('#umfrageTabelletd4').height(bodyHeight / 2);
+
                 }
             }
         }
