@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>DAM 2013</title>
+    <meta charset="utf-8"/>
     <link rel="stylesheet" type="text/css" href="css/index.css"/>
     <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
     <script type="text/javascript" src="js/jquery.mobile-1.3.2.min.js"></script>
@@ -18,10 +19,6 @@
             alert("window.localStorage, not defined");
         }
     </script>
-    <script type="text/javascript" charset="utf-8" src="js/guicontrol.js"></script>
-    <script type="text/javascript" charset="utf-8" src="js/communication.js"></script>
-    <script type="text/javascript" charset="utf-8" src="js/umfrage.js"></script>
-    <script type="text/javascript" charset="utf-8" src="js/vortrag.js"></script>
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
     <script type="text/javascript" charset="utf-8">
 
@@ -91,7 +88,7 @@
     <div style="float:left">
         <img id="menuIcon" src="img/menu.png" onclick="showMenue()"/>
     </div>
-    <img id="noconnection" src="img/noconnection.png" class="networkstatus hidden" alt="Verbindung aufbauen"
+    <img id="noconnection" src="img/noconnection.png" class="networkstatus " alt="Verbindung aufbauen"
          title="Verbindung aufbauen"/>
     <img id="anfragenaktiv" src="img/ajax-loader2.gif" class="networkstatus"/>
     <img id="connection" src="img/connection.png" class="networkstatus hidden" alt="Verbunden mit DAM App Server"
@@ -181,18 +178,20 @@
     <h3>Programm&uuml;bersicht</h3>
     <ul data-filter="true" data-role="listview" class="ui-listview"
         data-filter-placeholder="Suchen nach Personen/Abstract" id="programmuebersicht">
+        Das Programm steht nur zur Vefügung, wenn Sie über eine aktive Internetverbdindung verfügen. Klicken Sie <b onclick="generiereProgramm()">HIER</b> um das Programm zu aktualisieren.
     </ul>
 </div>
 <div data-role="collapsible" data-collapsed="true" id="waslaeuft">
     <h3>Was läuft jetzt?</h3>
     <ul data-filter="false" data-role="listview" class="ui-listview"
-        id="waslaeuftjetzt">
+        id="waslaeuftjetzt">Derzeit läuft kein Vortrag.
     </ul>
 </div>
 <div data-role="collapsible" data-collapsed="true">
     <h3>Autoren</h3>
     <ul data-filter="true" data-role="listview" class="ui-listview" id="autorenliste"
         data-filter-placeholder="Suchen nach Namen ...">
+        Das Autorenliste steht nur zur Vefügung, wenn Sie über eine aktive Internetverbdindung verfügen. Klicken Sie <b onclick="generiereAutorenListe()">HIER</b> um das Autorenliste zu aktualisieren.
     </ul>
 </div>
 <div data-role="collapsible" data-collapsed="true">
@@ -208,9 +207,7 @@
         <li class="ui-li ui-li-static ui-body-c fontnormal"><span class="">Hier erhalten Sie alle Informationen zur kongressbegleitenden App.</span>
 
             <div class="fontnormal" style="margin-top: 10px;line-height: 1.7;">Um die DAM 2013 App mit vollem
-                Funktionsumfang zu
-                nutzen,
-                benötigen Sie eine Internetverbindung.
+                Funktionsumfang zu nutzen, benötigen Sie eine Internetverbindung.
             </div>
         </li>
         <li class="ui-li ui-li-static ui-body-c"><img src="img/connection.png" style="margin: 25px 15px;"/><span
