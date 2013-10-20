@@ -5,6 +5,7 @@ var serverconfig = 0;
 var socket;
 var verbindungsVersuche = 0;
 var anfragen = 0;
+var bodyHeight = 0;
 
 function getServer() {
     if (serverconfig == 0) {
@@ -86,7 +87,7 @@ function initControls() {
     $('#waslaeuft').bind('expand', function () {
         waslaeuftjetzt();
     });
-
+    bodyHeight = $('body').height();
 }
 
 function starteAnfrage()
@@ -600,10 +601,10 @@ function umfrageAktiv() {
                 //$('#votingLink').click();
                 if (data.abgestimmt == false) {
                     $('#votingDiv').removeClass('hidden visibleVotingDiv').addClass('visibleVotingDiv');
-                    $('#umfrageTabelletd1').height(($('#votingDiv').height() / 2 ) - 20);
-                    $('#umfrageTabelletd2').height(($('#votingDiv').height() / 2 ) - 20);
-                    $('#umfrageTabelletd3').height($('#votingDiv').height() / 2);
-                    $('#umfrageTabelletd4').height($('#votingDiv').height() / 2);
+                    $('#umfrageTabelletd1').height(bodyHeight / 2  - 20);
+                    $('#umfrageTabelletd2').height(bodyHeight / 2  - 20);
+                    $('#umfrageTabelletd3').height(bodyHeight / 2);
+                    $('#umfrageTabelletd4').height(bodyHeight / 2);
                 }
             }
         }
