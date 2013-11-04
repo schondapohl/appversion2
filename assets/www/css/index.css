@@ -157,6 +157,8 @@ Sony Xperia Z */
         text-shadow: none;
         padding: 0px 15px;
     }
+
+
 }
 
 /*
@@ -339,7 +341,6 @@ html, body {
 
 .contentWrapper {
     padding: 0px 15px 15px 15px;
-    display: none;
 }
 
 #damHeadline {
@@ -425,6 +426,13 @@ html, body {
     right: 0;
 }
 
+#adminarea
+{
+    height: 150px;
+    border: solid 1px black;
+    padding: 10px;
+}
+
 #abstimmungscontroller {
     margin-bottom: 50px;
 }
@@ -504,11 +512,42 @@ html, body {
     cursor: pointer;
     text-decoration: underline;
     font-style: italic;
-    padding-left: 5px;
+    padding-left: 0px;
 }
 
 .kritzusammenfassung {
     padding: 10px;
     font-weight: normal;
+    text-shadow: none;
+}
+
+#schriftControl
+{
+    text-align: center;
+}
+
+.schriftbutton
+{
+    padding: 10px;
+    margin-left:5px;
+    margin-right: 5px;
+    border: solid 1px #cccccc;
+    background-color: #e9e9e9;
+    cursor: pointer;
+}
+
+#schriftkleiner
+{
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+#programmuebersicht
+{
+    text-shadow: none;
+}
+
+#programmuebersicht li
+{
     text-shadow: none;
 }

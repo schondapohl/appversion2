@@ -6,6 +6,7 @@ var socket;
 var verbindungsVersuche = 0;
 var anfragen = 0;
 var bodyHeight = 0;
+var schriftgroesse = 0;
 
 function getServer() {
     if (serverconfig == 0) {
@@ -73,7 +74,7 @@ function initControls() {
     })
 
     $('#connection').click(function () {
-        //delayedConnectionTry();
+        serverVerbindungManuell();
     })
 
     $('#loginDiv').click(function () {
@@ -87,30 +88,43 @@ function initControls() {
     $('#waslaeuft').bind('expand', function () {
         waslaeuftjetzt();
     });
+
+    $('#schriftkleiner').click(function () {
+        schriftgroesse = parseInt($('body').css('font-size'));
+        if (schriftgroesse != 0 && schriftgroesse != 8) {
+            schriftgroesse -= 1;
+            $('body').css('font-size', schriftgroesse);
+        }
+    })
+
+    $('#schriftgroesser').click(function () {
+        schriftgroesse = parseInt($('body').css('font-size'));
+        if (schriftgroesse != 0 && schriftgroesse != 32) {
+            schriftgroesse += 1;
+            $('body').css('font-size', schriftgroesse);
+        }
+    })
+
     bodyHeight = $('body').height();
-    $('#umfrageTabelletd1').height(bodyHeight / 2  - 20);
-    $('#umfrageTabelletd2').height(bodyHeight / 2  - 20);
+    $('#umfrageTabelletd1').height(bodyHeight / 2 - 20);
+    $('#umfrageTabelletd2').height(bodyHeight / 2 - 20);
     $('#umfrageTabelletd3').height(bodyHeight / 2);
     $('#umfrageTabelletd4').height(bodyHeight / 2);
 }
 
-function starteAnfrage()
-{
+function starteAnfrage() {
     anfragen = anfragen + 1;
     $('#anfragenaktiv').show();
 }
 
-function beendeAnfrage()
-{
+function beendeAnfrage() {
     anfragen = anfragen - 1;
-    if(anfragen == 0)
-    {
+    if (anfragen == 0) {
         $('#anfragenaktiv').hide();
     }
 }
 
-function verbindungAbrechen()
-{
+function verbindungAbrechen() {
     anfragen = 1;
     beendeAnfrage();
 }
@@ -141,10 +155,10 @@ function loginStart() {
                     window.localStorage.setItem("punkte", 0);
                     window.localStorage.setItem("status", 2);
                     if (data.m == true) {
-                        $('#adminButton').show();
+                        $('#adminarea').show();
                     }
                     else {
-                        $('#adminButton').hide();
+                        $('#adminarea').hide();
                     }
                     $('.ui-dialog').dialog('close');
                     leseVortragsStatus();
@@ -210,9 +224,9 @@ function enableDisableVotings(data) {
          */
         /* Vortrag */
         vortrag = data[i];
-        console.log("enableDisableVotings:" + vortrag.vtitel + " ist aktiv " + vortrag.aktiv );
+        /*console.log("enableDisableVotings:" + vortrag.vtitel + " ist aktiv " + vortrag.aktiv );*/
         if (vortrag.aktiv == 1) {
-            $('#vortragWrapper_' + i + " h4").html(vortrag.vautor  + ": " + vortrag.vtitel);
+            $('#vortragWrapper_' + i + " h4").html(vortrag.vautor + ": " + vortrag.vtitel);
             /*var votingBlock = "";
              votingBlock = $('#vortragWrapper_' + i).html().replace("K1",data[0].keins);
              votingBlock = votingBlock.replace("K2",data[0].kzwei);
@@ -338,34 +352,29 @@ function waslaeuftjetzt() {
     });
 }
 
-function showMenue()
-{
+function showMenue() {
     $('#menuContainer').toggle('fast');
 }
 
-function exitApp()
-{
+function exitApp() {
     logoff();
     console.log("Exit App");
-    if(navigator.app){
+    if (navigator.app) {
         navigator.app.exitApp();
-    }else if(navigator.device){
+    } else if (navigator.device) {
         navigator.device.exitApp();
     }
-    else
-    {
+    else {
         logoff();
         alert("Sie können die Anwendung verlassen/minimieren");
     }
 }
 
-function zeigeImpressum()
-{
+function zeigeImpressum() {
     $('#impressumDiv').removeClass('hidden visibleImpressumDiv').addClass('visibleImpressumDiv');
 }
 
-function schliesseImpressum()
-{
+function schliesseImpressum() {
     $('#impressumDiv').removeClass('hidden visibleImpressumDiv').addClass('hidden');
 }
 
@@ -382,7 +391,7 @@ function manageGui() {
             $('#abstimmungsheadline').html("Vortr&auml;ge bewerten");
             $('#interactiveController').removeClass("ui-disabled");
             $('#interactiveControllerHeadline').html("Interaktiver Vortrag");
-            console.log("manageGui - vortraegeGelesen " + vortraegeGelesenNachLogin )
+            console.log("manageGui - vortraegeGelesen " + vortraegeGelesenNachLogin)
             if (!vortraegeGelesenNachLogin) {
                 leseVortragsStatus();
                 vortraegeGelesenNachLogin = true;
@@ -401,6 +410,7 @@ function manageGui() {
 }
 
 function logoff() {
+    $('#adminarea').hide();
     window.localStorage.clear();
     window.localStorage.setItem("status", 1);
     $('#loginDiv').show();
@@ -536,7 +546,7 @@ function abstimmen(antwort) {
         uid = uniqueID;
     }
     else {
-        uid = device.uuid;
+        uid = device.name;
     }
     console.log("ID " + uid);
 
@@ -572,7 +582,7 @@ function abstimmen(antwort) {
 }
 
 function umfrageAktiv() {
-    console.log("umfrageAktiv() - Pruefen ob Umfrage aktiv ist ...");
+    //console.log("umfrageAktiv() - Pruefen ob Umfrage aktiv ist ...");
     var uid = null;
     if (typeof device === "undefined") {
         uid = uniqueID;
@@ -589,8 +599,8 @@ function umfrageAktiv() {
         success:function (data) {
             zeigeAppGui();
             zeigeStartLogo = false;
-            console.log("umfrageAktiv() - Antwortdaten");
-            console.log(data);
+            //console.log("umfrageAktiv() - Antwortdaten");
+            //console.log(data);
             if (data.gestartet == true) {
                 $('#v_frage').html(data.frage);
                 $('#v_a').html(data.a);
@@ -606,6 +616,11 @@ function umfrageAktiv() {
             }
         }
     });
+}
+
+function serverVerbindungManuell() {
+    socket.emit('serverVerbindungManuell', null);
+    umfrageAktiv();
 }
 
 function delayedConnectionTry() {
@@ -648,6 +663,56 @@ function delayedConnectionTry() {
         }
 
     }
+}
+
+function appStarted() {
+    var uid = null;
+    if (typeof device === "undefined") {
+        uid = uniqueID;
+        $.ajax({
+            dataType:'jsonp',
+            data:{mode:'appstart', duid:uid, dname:'browser'},
+            jsonp:'jsonp_callback',
+            url:getServer() + getPath() + 'ajax_deviceconnector.php',
+            success:function (data) {
+                serverGuiErlaubnisse();
+            }
+        });
+    }
+    else {
+        uid = device.uuid;
+        $.ajax({
+            dataType:'jsonp',
+            data:{mode:'appstart', dname:device.name, dos:device.platform, dphonegap:device.phonegap, duid:device.uuid, dversion:device.version, dmodel:device.model},
+            jsonp:'jsonp_callback',
+            url:getServer() + getPath() + 'ajax_deviceconnector.php',
+            success:function (data) {
+                serverGuiErlaubnisse();
+            }
+        });
+    }
+}
+
+function serverGuiErlaubnisse()
+{
+    $.ajax({
+        dataType:'jsonp',
+        data:{mode:'guicontrol'},
+        jsonp:'jsonp_callback',
+        url:getServer() + getPath() + 'ajax_deviceconnector.php',
+        success:function (data) {
+            if(data.schriftgroesseaendern == true)
+            {
+                $('#schriftControl').show();
+                $('.guiControlSchrift').show();
+            }
+            else
+            {
+                $('#schriftControl').hide();
+                $('.guiControlSchrift').hide();
+            }
+        }
+    });
 }
 
 function generiereAutorenListe() {
@@ -696,12 +761,15 @@ function generiereProgramm() {
         success:function (data) {
             htmlcode = "";
             tag2found = false;
+            tag3found = false;
             counter = 0;
             //console.log("generiereProgramm() - Antwortdaten");
             //console.log(data);
-            eintrag = "<li class=\"ui-li ui-li-static ui-body-c\">XXX - YYY Uhr: <b>WWWZZZ</b><div class=\"expl fontnormal\">AAA<span id=\"more___\" class=\"mehrlesen\" onclick=\"mehrlesen('vidBBB')\">(weiterlesen)</span></div><div id=\"morecontentCCC\" style='display: none;'></div></li>";
+            eintrag = "<li class=\"ui-li ui-li-static ui-body-c\">XXX - YYY Uhr: <b>WWWZZZ</b><div class=\"expl fontnormal\">AAA<img id=\"moreload___\" src=\"../img/ajax-loader3.gif\" class=\"hidden\" /><span id=\"more___\" class=\"mehrlesen\" onclick=\"mehrlesen('vidBBB')\">(weiterlesen)</span></div><div id=\"morecontentCCC\" style='display: none;'></div></li>";
+            eintragOhneMehrLesen = "<li class=\"ui-li ui-li-static ui-body-c\">XXX - YYY Uhr: <b>WWWZZZ</b><div class=\"expl fontnormal\">AAA</div><div id=\"morecontentCCC\" style='display: none;'></div></li>";
             htag1 = "<li data-role=\"list-divider\" role=\"heading\" class=\"ui-li ui-li-divider ui-btn ui-bar-e ui-btn-up-undefined\">Tag 1 (21.11.2013)</li>";
             htag2 = "<li data-role=\"list-divider\" role=\"heading\" class=\"ui-li ui-li-divider ui-btn ui-bar-e ui-btn-up-undefined\">Tag 2 (22.11.2013)</li>";
+            htag3 = "<li data-role=\"list-divider\" role=\"heading\" class=\"ui-li ui-li-divider ui-btn ui-bar-e ui-btn-up-undefined\">Tag 3 (23.11.2013)</li>";
             dlength = data.length;
             console.log("generiereProgramm() - Antwortdaten " + dlength);
             for (var i = 0; i < dlength; i++) {
@@ -714,7 +782,18 @@ function generiereProgramm() {
                     htmlcode = htmlcode + htag2;
                 }
 
-                zeile = eintrag.replace("XXX", data[i].von);
+                if (data[i].tag == 3 && tag3found == false) {
+                    tag3found = true;
+                    htmlcode = htmlcode + htag3;
+                }
+
+                if (data[i].ausblenden == 0) {
+                    zeile = eintrag.replace("XXX", data[i].von);
+                }
+                else {
+                    zeile = eintragOhneMehrLesen.replace("XXX", data[i].von);
+                }
+
                 zeile = zeile.replace("YYY", data[i].bis);
                 if (data[i].pause == 1) {
                     zeile = zeile.replace("WWW", data[i].titel);
@@ -726,6 +805,7 @@ function generiereProgramm() {
                 }
 
                 zeile = zeile.replace("AAA", data[i].hintergrund);
+                zeile = zeile.replace("___", "_" + data[i].vid);
                 zeile = zeile.replace("___", "_" + data[i].vid);
                 zeile = zeile.replace("BBB", "_" + data[i].vid);
                 zeile = zeile.replace("CCC", "_" + data[i].vid);
@@ -741,20 +821,25 @@ function generiereProgramm() {
 function mehrlesen(vid) {
     console.log("mehrlesen - " + vid);
     theid = vid.split('_');
-    if ($('#more_' + theid[1]).html() == "Information verstecken") {
+    if (
+        $('#more_' + theid[1]).html() == "Information verstecken") {
         $('#more_' + theid[1]).html("mehr lesen");
         $('#morecontent_' + theid[1]).toggle();
     }
     else {
+        $('#moreload_' + theid[1]).show();
+        $('#more_' + theid[1]).hide();
         $.ajax({
             dataType:'jsonp',
             data:{mode:'leseMehrZuVortrag', id:theid[1]},
             jsonp:'jsonp_callback',
             url:getServer() + getPath() + 'ajax_programm.php',
             success:function (data) {
+                $('#more_' + theid[1]).show();
                 $('#more_' + theid[1]).html("Information verstecken");
                 $('#morecontent_' + theid[1]).html(data.response);
                 $('#morecontent_' + theid[1]).toggle();
+                $('#moreload_' + theid[1]).hide();
             }
         });
     }
