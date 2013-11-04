@@ -7,6 +7,7 @@ var verbindungsVersuche = 0;
 var anfragen = 0;
 var bodyHeight = 0;
 var schriftgroesse = 0;
+var aktuellesBewerten="";
 
 function getServer() {
     if (serverconfig == 0) {
@@ -329,31 +330,35 @@ function enableDisableVotings(data) {
 }
 
 function bewerten(theid) {
-    bid = theid.split('_');
-    namea = "slider-fill_" + bid[1] + "_1";
-    nameb = "slider-fill_" + bid[1] + "_2";
-    namec = "slider-fill_" + bid[1] + "_3";
+    if(aktuellesBewerten != theid)
+    {
+        aktuellesBewerten = theid;
+        bid = theid.split('_');
+        namea = "slider-fill_" + bid[1] + "_1";
+        nameb = "slider-fill_" + bid[1] + "_2";
+        namec = "slider-fill_" + bid[1] + "_3";
 
-    $('#vote_' + bid[1]).removeClass('ui-disabled').addClass('ui-disabled');
+        $('#vote_' + bid[1]).removeClass('ui-disabled').addClass('ui-disabled');
 
-    $('#bewerten_laden_' + bid[1]).show();
-    $.ajax({
-        dataType:'jsonp',
-        data:{mode:"bewerten", vid:$('#vh_' + bid[1]).val(), u:window.localStorage.getItem("hash"), a:$('#' + namea).val(), b:$('#' + nameb).val(), c:$('#' + namec).val()},
-        jsonp:'jsonp_callback',
-        url:getServer() + getPath() + 'ajax_vortrag.php',
-        success:function (data) {
-            if (data.a && data.b && data.c) {
-                leseVortragsStatus();
-                manageGui();
+        $('#bewerten_laden_' + bid[1]).show();
+        $.ajax({
+            dataType:'jsonp',
+            data:{mode:"bewerten", vid:$('#vh_' + bid[1]).val(), u:window.localStorage.getItem("hash"), a:$('#' + namea).val(), b:$('#' + nameb).val(), c:$('#' + namec).val()},
+            jsonp:'jsonp_callback',
+            url:getServer() + getPath() + 'ajax_vortrag.php',
+            success:function (data) {
+                if (data.a && data.b && data.c) {
+                    leseVortragsStatus();
+                    manageGui();
+                }
+                else {
+                    alert("Fehler bei der Bewertung");
+                }
+
             }
-            else {
-                alert("Fehler bei der Bewertung");
-            }
-
-        }
-    });
-    $('#bewerten_laden_' + bid[1]).hide();
+        });
+        $('#bewerten_laden_' + bid[1]).hide();
+    }
 }
 
 function waslaeuftjetzt() {
@@ -638,7 +643,6 @@ function umfrageAktiv() {
                 //$('#votingLink').click();
                 if (data.abgestimmt == false) {
                     $('#votingDiv').removeClass('hidden visibleVotingDiv').addClass('visibleVotingDiv');
-
                 }
             }
         }
