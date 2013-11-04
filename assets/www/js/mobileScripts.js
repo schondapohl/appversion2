@@ -792,8 +792,8 @@ function generiereProgramm() {
             counter = 0;
             //console.log("generiereProgramm() - Antwortdaten");
             //console.log(data);
-            eintrag = "<li class=\"ui-li ui-li-static ui-body-c\">XXX - YYY Uhr: <b>WWWZZZ</b><div class=\"expl fontnormal\">AAA<img id=\"moreload___\" src=\"ajax-loader3.gif\" class=\"hidden\" /><span id=\"more___\" class=\"mehrlesen\" onclick=\"mehrlesen('vidBBB')\">(Abstract lesen)</span></div><div id=\"morecontentCCC\" style='display: none;'></div></li>";
-            eintragOhneMehrLesen = "<li class=\"ui-li ui-li-static ui-body-c\">XXX - YYY Uhr: <b>WWWZZZ</b><div class=\"expl fontnormal\">AAA</div><div id=\"morecontentCCC\" style='display: none;'></div></li>";
+            eintrag = "<li class=\"ui-li ui-li-static ui-body-MMM\">XXX - YYY Uhr: <b>WWWZZZ</b><div class=\"expl fontnormal\">AAA<img id=\"moreload___\" src=\"ajax-loader3.gif\" class=\"hidden\" /><span id=\"more___\" class=\"mehrlesen\" onclick=\"mehrlesen('vidBBB')\">(Abstract lesen)</span></div><div id=\"morecontentCCC\" style='display: none;'></div></li>";
+            eintragOhneMehrLesen = "<li class=\"ui-li ui-li-static ui-body-MMM\">XXX - YYY Uhr: <b>WWWZZZ</b><div class=\"expl fontnormal\">AAA</div><div id=\"morecontentCCC\" style='display: none;'></div></li>";
             htag1 = "<li data-role=\"list-divider\" role=\"heading\" class=\"ui-li ui-li-divider ui-btn ui-bar-e ui-btn-up-undefined\">Tag 1 (21.11.2013)</li>";
             htag2 = "<li data-role=\"list-divider\" role=\"heading\" class=\"ui-li ui-li-divider ui-btn ui-bar-e ui-btn-up-undefined\">Tag 2 (22.11.2013)</li>";
             htag3 = "<li data-role=\"list-divider\" role=\"heading\" class=\"ui-li ui-li-divider ui-btn ui-bar-e ui-btn-up-undefined\">Tag 3 (23.11.2013)</li>";
@@ -836,6 +836,7 @@ function generiereProgramm() {
                 zeile = zeile.replace("___", "_" + data[i].vid);
                 zeile = zeile.replace("BBB", "_" + data[i].vid);
                 zeile = zeile.replace("CCC", "_" + data[i].vid);
+                zeile = zeile.replace("MMM", data[i].anzeige);
                 htmlcode = htmlcode + zeile;
                 counter = counter + 1;
             }
