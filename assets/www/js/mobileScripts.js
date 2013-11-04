@@ -135,6 +135,34 @@ function zeigeAppGui() {
     $('#footerBar').show();
 }
 
+function userLoginLog() {
+    var uid = null;
+    if (typeof device === "undefined") {
+        uid = uniqueID;
+        $.ajax({
+            dataType:'jsonp',
+            data:{mode:'loggedin', duid:uid, dname:'browser'},
+            jsonp:'jsonp_callback',
+            url:getServer() + getPath() + 'ajax_deviceconnector.php',
+            success:function (data) {
+
+            }
+        });
+    }
+    else {
+        uid = device.uuid;
+        $.ajax({
+            dataType:'jsonp',
+            data:{mode:'loggedin', dname:device.name, dos:device.platform, dphonegap:device.phonegap, duid:device.uuid, dversion:device.version, dmodel:device.model},
+            jsonp:'jsonp_callback',
+            url:getServer() + getPath() + 'ajax_deviceconnector.php',
+            success:function (data) {
+
+            }
+        });
+    }
+}
+
 function loginStart() {
     $('.formElement').hide();
     $('#loginButton').hide();
@@ -162,6 +190,7 @@ function loginStart() {
                     }
                     $('.ui-dialog').dialog('close');
                     leseVortragsStatus();
+
                 }
                 else {
                     $('#errorMessage').html("Login nicht erfolgreich");
@@ -546,10 +575,8 @@ function abstimmen(antwort) {
         uid = uniqueID;
     }
     else {
-        uid = device.name;
+        uid = device.uuid;
     }
-    console.log("ID " + uid);
-
     $.ajax({
         dataType:'jsonp',
         data:{mode:'abstimmen', fid:$('#v_value').val(), a:antwort, u:uid},
@@ -765,7 +792,7 @@ function generiereProgramm() {
             counter = 0;
             //console.log("generiereProgramm() - Antwortdaten");
             //console.log(data);
-            eintrag = "<li class=\"ui-li ui-li-static ui-body-c\">XXX - YYY Uhr: <b>WWWZZZ</b><div class=\"expl fontnormal\">AAA<img id=\"moreload___\" src=\"../img/ajax-loader3.gif\" class=\"hidden\" /><span id=\"more___\" class=\"mehrlesen\" onclick=\"mehrlesen('vidBBB')\">(weiterlesen)</span></div><div id=\"morecontentCCC\" style='display: none;'></div></li>";
+            eintrag = "<li class=\"ui-li ui-li-static ui-body-c\">XXX - YYY Uhr: <b>WWWZZZ</b><div class=\"expl fontnormal\">AAA<img id=\"moreload___\" src=\"ajax-loader3.gif\" class=\"hidden\" /><span id=\"more___\" class=\"mehrlesen\" onclick=\"mehrlesen('vidBBB')\">(Abstract lesen)</span></div><div id=\"morecontentCCC\" style='display: none;'></div></li>";
             eintragOhneMehrLesen = "<li class=\"ui-li ui-li-static ui-body-c\">XXX - YYY Uhr: <b>WWWZZZ</b><div class=\"expl fontnormal\">AAA</div><div id=\"morecontentCCC\" style='display: none;'></div></li>";
             htag1 = "<li data-role=\"list-divider\" role=\"heading\" class=\"ui-li ui-li-divider ui-btn ui-bar-e ui-btn-up-undefined\">Tag 1 (21.11.2013)</li>";
             htag2 = "<li data-role=\"list-divider\" role=\"heading\" class=\"ui-li ui-li-divider ui-btn ui-bar-e ui-btn-up-undefined\">Tag 2 (22.11.2013)</li>";
@@ -822,8 +849,8 @@ function mehrlesen(vid) {
     console.log("mehrlesen - " + vid);
     theid = vid.split('_');
     if (
-        $('#more_' + theid[1]).html() == "Information verstecken") {
-        $('#more_' + theid[1]).html("mehr lesen");
+        $('#more_' + theid[1]).html() == "Abstract zuklappen") {
+        $('#more_' + theid[1]).html("Abstract lesen");
         $('#morecontent_' + theid[1]).toggle();
     }
     else {
@@ -836,7 +863,7 @@ function mehrlesen(vid) {
             url:getServer() + getPath() + 'ajax_programm.php',
             success:function (data) {
                 $('#more_' + theid[1]).show();
-                $('#more_' + theid[1]).html("Information verstecken");
+                $('#more_' + theid[1]).html("Abstract zuklappen");
                 $('#morecontent_' + theid[1]).html(data.response);
                 $('#morecontent_' + theid[1]).toggle();
                 $('#moreload_' + theid[1]).hide();
